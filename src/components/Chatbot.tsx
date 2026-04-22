@@ -31,7 +31,7 @@ const generateReply = (q: string, history: HistoryEntry[]): string => {
   if (/result|mean|score|sentiment|last|latest/.test(lower)) {
     if (!last) return "You haven't analyzed any text yet. Head to the Analyze section and paste some content first!";
     const pct = (n: number) => `${(n * 100).toFixed(0)}%`;
-    return `Your latest analysis on ${last.platform} came back as **${last.label}** with ${pct(last.result.score)} confidence. Breakdown: positive ${pct(last.result.positive)}, neutral ${pct(last.result.neutral)}, negative ${pct(last.result.negative)}. ${last.result.label === "positive" ? "Nice — your audience will likely respond well!" : last.result.label === "negative" ? "Consider rewording for a warmer tone." : "Adding emotion or a question could boost engagement."}`;
+    return `Your latest analysis on ${last.platform} came back as **${last.result.label}** with ${pct(last.result.score)} confidence. Breakdown: positive ${pct(last.result.positive)}, neutral ${pct(last.result.neutral)}, negative ${pct(last.result.negative)}. ${last.result.label === "positive" ? "Nice — your audience will likely respond well!" : last.result.label === "negative" ? "Consider rewording for a warmer tone." : "Adding emotion or a question could boost engagement."}`;
   }
   if (/api|key|hugging/.test(lower)) {
     return "You need a free Hugging Face API key. Visit huggingface.co/settings/tokens, create a 'Read' token, and paste it into the API key field in the Analyze section. It's stored only in your browser.";
