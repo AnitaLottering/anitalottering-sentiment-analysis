@@ -57,6 +57,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        "primary-glow": "hsl(var(--primary-glow))",
+        positive: "hsl(var(--positive))",
+        negative: "hsl(var(--negative))",
+        neutral: "hsl(var(--neutral))",
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
