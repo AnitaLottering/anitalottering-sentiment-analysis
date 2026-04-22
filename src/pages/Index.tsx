@@ -1,16 +1,58 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect, useState } from "react";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { Features } from "@/components/Features";
+import { Analyzer } from "@/components/Analyzer";
+import { PromptLibrary } from "@/components/PromptLibrary";
+import { Rating } from "@/components/Rating";
+import { Chatbot } from "@/components/Chatbot";
+import { getHistory, type HistoryEntry } from "@/lib/storage";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+
+  useEffect(() => {
+    setHistory(getHistory());
+    document.title = "SentiPulse — AI Social Media Sentiment Analysis";
+    const meta = document.querySelector('meta[name="description"]');
+    const desc = "Analyze sentiment of social media posts from Twitter, Instagram, Facebook, LinkedIn and TikTok with AI-powered insights and beautiful charts.";
+    if (meta) meta.setAttribute("content", desc);
+    else {
+      const m = document.createElement("meta");
+      m.name = "description";
+      m.content = desc;
+      document.head.appendChild(m);
+    }
+  }, []);
+
+  const handleRerun = (text: string, _platform: string) => {
+    const ta = document.querySelector<HTMLTextAreaElement>("#analyze textarea");
+    if (ta) {
+      ta.focus();
+      ta.value = text;
+      ta.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+    document.getElementById("analyze")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <main>
+        <Hero />
+        <Features />
+        <Analyzer history={history} onHistoryChange={setHistory} />
+        <PromptLibrary history={history} onChange={setHistory} onRerun={handleRerun} />
+        <Rating />
+      </main>
+      <footer className="py-10 border-t border-border text-center text-sm text-muted-foreground">
+        <div className="container">
+          Built with ❤️ · Powered by Hugging Face · Your data stays in your browser
+        </div>
+      </footer>
+      <Chatbot history={history} />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
