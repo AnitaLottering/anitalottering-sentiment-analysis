@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { Features } from "@/components/Features";
 import { Analyzer } from "@/components/Analyzer";
 import { PromptLibrary } from "@/components/PromptLibrary";
 import { Rating } from "@/components/Rating";
@@ -40,7 +39,6 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <Features />
         <Analyzer history={history} onHistoryChange={setHistory} />
         <PromptLibrary history={history} onChange={setHistory} onRerun={handleRerun} />
         <Rating />

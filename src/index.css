@@ -30,9 +30,9 @@
     --tertiary: 270 70% 50%;
     --quaternary: 270 60% 40%;
 
-    --positive: 270 70% 50%;
-    --negative: 270 85% 65%;
-    --neutral: 270 30% 70%;
+    --positive: 142 71% 45%;
+    --negative: 0 78% 55%;
+    --neutral: 45 95% 55%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -76,9 +76,9 @@
     --accent-foreground: 260 30% 8%;
     --tertiary: 270 70% 55%;
     --quaternary: 270 60% 45%;
-    --positive: 270 70% 60%;
-    --negative: 285 90% 75%;
-    --neutral: 270 30% 65%;
+    --positive: 142 65% 55%;
+    --negative: 0 75% 62%;
+    --neutral: 45 95% 60%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 270 40% 98%;
     --border: 260 20% 22%;
