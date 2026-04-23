@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, Upload, Sparkles, Eye, EyeOff, Download } from "lucide-react";
+import { Loader2, Upload, Sparkles, Download, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { analyzeSentiment, explainSentiment, type SentimentScore } from "@/lib/sentiment";
-import { addHistory, getApiKey, setApiKey, getHistory, type HistoryEntry } from "@/lib/storage";
+import { addHistory, type HistoryEntry } from "@/lib/storage";
 import { SentimentCharts } from "./SentimentCharts";
 
 const PLATFORMS = ["Twitter/X", "Instagram", "Facebook", "LinkedIn", "TikTok", "Other"];
@@ -25,18 +24,9 @@ interface Props {
 export const Analyzer = ({ history, onHistoryChange }: Props) => {
   const [text, setText] = useState("");
   const [platform, setPlatform] = useState("Twitter/X");
-  const [apiKey, setKey] = useState("");
-  const [showKey, setShowKey] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SentimentScore | null>(null);
   const [explanation, setExplanation] = useState("");
-
-  useEffect(() => { setKey(getApiKey()); }, []);
-
-  const handleKeyChange = (v: string) => {
-    setKey(v);
-    setApiKey(v);
-  };
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -51,11 +41,13 @@ export const Analyzer = ({ history, onHistoryChange }: Props) => {
   };
 
   const handleAnalyze = async () => {
-    if (!text.trim()) return toast.error("Please enter some text");
-    if (!apiKey) return toast.error("Please add your Hugging Face API key");
+    if (!text.trim()) {
+      toast.error("Please enter some text to analyze");
+      return;
+    }
     setLoading(true);
     try {
-      const r = await analyzeSentiment(text.trim(), apiKey);
+      const r = await analyzeSentiment(text.trim());
       setResult(r);
       setExplanation(explainSentiment(r, text.trim()));
       const entry: HistoryEntry = {
@@ -72,6 +64,14 @@ export const Analyzer = ({ history, onHistoryChange }: Props) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleReset = () => {
+    setText("");
+    setResult(null);
+    setExplanation("");
+    setPlatform("Twitter/X");
+    toast.success("Cleared");
   };
 
   const exportResult = () => {
@@ -92,43 +92,20 @@ export const Analyzer = ({ history, onHistoryChange }: Props) => {
     <section id="analyze" className="py-24 bg-gradient-soft">
       <div className="container max-w-6xl">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Analyze sentiment</h2>
-          <p className="text-muted-foreground text-lg">Paste a post or upload a file. Get instant insights.</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Analyze <span className="text-gradient">sentiment</span></h2>
+          <p className="text-muted-foreground text-lg">Paste a post or upload a file. Get instant insights — no API key required.</p>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-6">
           <div className="lg:col-span-3 p-6 md:p-8 rounded-2xl bg-card border border-border shadow-soft space-y-4">
-            <div className="grid sm:grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Platform</label>
-                <Select value={platform} onValueChange={setPlatform}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {PLATFORMS.map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
-                  Hugging Face API Key <span className="text-primary">(stored locally)</span>
-                </label>
-                <div className="relative">
-                  <Input
-                    type={showKey ? "text" : "password"}
-                    value={apiKey}
-                    onChange={e => handleKeyChange(e.target.value)}
-                    placeholder="hf_..."
-                    className="pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowKey(s => !s)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                  >
-                    {showKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
+            <div>
+              <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Platform</label>
+              <Select value={platform} onValueChange={setPlatform}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {PLATFORMS.map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                </SelectContent>
+              </Select>
             </div>
 
             <div>
@@ -149,18 +126,29 @@ export const Analyzer = ({ history, onHistoryChange }: Props) => {
               </div>
             </div>
 
-            <Button
-              onClick={handleAnalyze}
-              disabled={loading}
-              size="lg"
-              className="w-full bg-gradient-hero hover:opacity-90 shadow-glow h-12"
-            >
-              {loading ? (
-                <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Analyzing...</>
-              ) : (
-                <><Sparkles className="w-4 h-4 mr-2" /> Analyze sentiment</>
-              )}
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                onClick={handleAnalyze}
+                disabled={loading}
+                size="lg"
+                className="flex-1 bg-gradient-hero hover:opacity-90 hover:scale-[1.02] shadow-glow h-12 text-primary-foreground transition-smooth"
+              >
+                {loading ? (
+                  <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Analyzing...</>
+                ) : (
+                  <><Sparkles className="w-4 h-4 mr-2" /> Analyze sentiment</>
+                )}
+              </Button>
+              <Button
+                onClick={handleReset}
+                disabled={loading}
+                size="lg"
+                variant="outline"
+                className="h-12 border-2 hover:bg-secondary hover:scale-[1.02] transition-smooth"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" /> Reset
+              </Button>
+            </div>
           </div>
 
           <div className="lg:col-span-2 p-6 md:p-8 rounded-2xl bg-gradient-card border border-border shadow-soft">
@@ -193,7 +181,7 @@ export const Analyzer = ({ history, onHistoryChange }: Props) => {
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">{explanation}</p>
-                <Button variant="outline" size="sm" onClick={exportResult} className="w-full">
+                <Button variant="outline" size="sm" onClick={exportResult} className="w-full hover:bg-secondary transition-smooth">
                   <Download className="w-3.5 h-3.5 mr-2" /> Export JSON
                 </Button>
               </div>
