@@ -16,6 +16,12 @@ const labelStyles: Record<string, string> = {
   neutral: "bg-neutral/10 text-neutral border-neutral/30",
 };
 
+const emoji: Record<string, string> = {
+  positive: "😄",
+  negative: "😠",
+  neutral: "😐",
+};
+
 interface Props {
   history: HistoryEntry[];
   onHistoryChange: (h: HistoryEntry[]) => void;
@@ -58,7 +64,7 @@ export const Analyzer = ({ history, onHistoryChange }: Props) => {
         timestamp: Date.now(),
       };
       onHistoryChange(addHistory(entry));
-      toast.success(`Detected: ${r.label}`);
+      toast.success(`${emoji[r.label]} Detected: ${r.label}`);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Analysis failed");
     } finally {
@@ -161,14 +167,17 @@ export const Analyzer = ({ history, onHistoryChange }: Props) => {
               </div>
             ) : result ? (
               <div className="space-y-4 animate-fade-in-up">
-                <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border capitalize ${labelStyles[result.label]}`}>
+                <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border capitalize ${labelStyles[result.label]}`}>
+                  <span className="text-lg leading-none">{emoji[result.label]}</span>
                   {result.label} · {(result.score * 100).toFixed(1)}%
                 </div>
                 <div className="space-y-2">
                   {(["positive", "neutral", "negative"] as const).map(k => (
                     <div key={k}>
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="capitalize text-muted-foreground">{k}</span>
+                        <span className="capitalize text-muted-foreground flex items-center gap-1.5">
+                          <span className="text-base leading-none">{emoji[k]}</span>{k}
+                        </span>
                         <span className="font-medium">{(result[k] * 100).toFixed(1)}%</span>
                       </div>
                       <div className="h-2 bg-secondary rounded-full overflow-hidden">

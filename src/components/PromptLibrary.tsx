@@ -8,6 +8,12 @@ const colorBy: Record<string, string> = {
   neutral: "bg-neutral/10 text-neutral border-neutral/30",
 };
 
+const emoji: Record<string, string> = {
+  positive: "😄",
+  negative: "😠",
+  neutral: "😐",
+};
+
 const ago = (ts: number) => {
   const s = Math.floor((Date.now() - ts) / 1000);
   if (s < 60) return "just now";
@@ -37,9 +43,10 @@ export const PromptLibrary = ({ history, onChange, onRerun }: Props) => {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {history.map(h => (
-              <div key={h.id} className="p-5 rounded-2xl bg-card border border-border shadow-soft hover:shadow-elegant transition-smooth flex flex-col">
+              <div key={h.id} className="p-5 rounded-2xl bg-card border border-border shadow-soft hover:shadow-elegant hover:-translate-y-1 transition-smooth flex flex-col">
                 <div className="flex items-center justify-between mb-3">
-                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border capitalize ${colorBy[h.result.label]}`}>
+                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border capitalize inline-flex items-center gap-1.5 ${colorBy[h.result.label]}`}>
+                    <span className="text-sm leading-none">{emoji[h.result.label]}</span>
                     {h.result.label} · {(h.result.score * 100).toFixed(0)}%
                   </span>
                   <span className="text-xs text-muted-foreground">{h.platform}</span>
