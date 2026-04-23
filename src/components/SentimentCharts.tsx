@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid, Legend } from "recharts";
+import { Button } from "@/components/ui/button";
+import { BarChart3, LineChart as LineIcon } from "lucide-react";
 import type { HistoryEntry } from "@/lib/storage";
 
 const COLORS = {
@@ -8,6 +11,7 @@ const COLORS = {
 };
 
 export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
+  const [avgChartType, setAvgChartType] = useState<"bar" | "line">("bar");
   if (history.length === 0) return null;
 
   const totals = history.reduce(
@@ -100,40 +104,67 @@ export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
       </div>
 
       <div className="p-6 rounded-2xl bg-card border border-border shadow-soft hover-lift">
-        <h3 className="font-semibold mb-4">Average confidence (%)</h3>
-        <ResponsiveContainer width="100%" height={220}>
-          <BarChart data={barData}>
-            <defs>
-              <linearGradient id="bar-positive" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={COLORS.positive} />
-                <stop offset="100%" stopColor="hsl(var(--quaternary))" />
-              </linearGradient>
-              <linearGradient id="bar-negative" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={COLORS.negative} />
-                <stop offset="100%" stopColor="hsl(var(--accent))" />
-              </linearGradient>
-              <linearGradient id="bar-neutral" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={COLORS.neutral} />
-                <stop offset="100%" stopColor="hsl(var(--tertiary))" />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-            <XAxis dataKey="name" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-            <YAxis tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-            <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "hsl(var(--muted) / 0.4)" }} />
-            <Legend wrapperStyle={{ fontSize: "0.8rem" }} />
-            <Bar
-              dataKey="value"
-              name="Confidence"
-              radius={[8, 8, 0, 0]}
-              isAnimationActive
-              animationDuration={900}
+        <div className="flex items-center justify-between mb-4 gap-2">
+          <h3 className="font-semibold">Average confidence (%)</h3>
+          <div className="inline-flex rounded-lg border border-border p-0.5 bg-secondary">
+            <Button
+              size="sm"
+              variant={avgChartType === "bar" ? "default" : "ghost"}
+              className="h-7 px-2"
+              onClick={() => setAvgChartType("bar")}
+              aria-label="Bar chart"
             >
-              {barData.map((d) => (
-                <Cell key={d.key} fill={d.fill} />
-              ))}
-            </Bar>
-          </BarChart>
+              <BarChart3 className="w-3.5 h-3.5" />
+            </Button>
+            <Button
+              size="sm"
+              variant={avgChartType === "line" ? "default" : "ghost"}
+              className="h-7 px-2"
+              onClick={() => setAvgChartType("line")}
+              aria-label="Line chart"
+            >
+              <LineIcon className="w-3.5 h-3.5" />
+            </Button>
+          </div>
+        </div>
+        <ResponsiveContainer width="100%" height={220}>
+          {avgChartType === "bar" ? (
+            <BarChart data={barData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+              <YAxis tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+              <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "hsl(var(--muted) / 0.4)" }} />
+              <Legend wrapperStyle={{ fontSize: "0.8rem" }} />
+              <Bar
+                dataKey="value"
+                name="Confidence"
+                radius={[8, 8, 0, 0]}
+                isAnimationActive
+                animationDuration={900}
+              >
+                {barData.map((d) => (
+                  <Cell key={d.key} fill={d.fill} />
+                ))}
+              </Bar>
+            </BarChart>
+          ) : (
+            <LineChart data={barData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis dataKey="name" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+              <YAxis tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
+              <Tooltip contentStyle={tooltipStyle} />
+              <Legend wrapperStyle={{ fontSize: "0.8rem" }} />
+              <Line
+                type="monotone"
+                dataKey="value"
+                name="Confidence"
+                stroke="hsl(var(--primary))"
+                strokeWidth={2.5}
+                dot={{ r: 5, fill: "hsl(var(--primary))" }}
+                animationDuration={900}
+              />
+            </LineChart>
+          )}
         </ResponsiveContainer>
       </div>
 
