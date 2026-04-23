@@ -63,6 +63,11 @@ export default {
         positive: "hsl(var(--positive))",
         negative: "hsl(var(--negative))",
         neutral: "hsl(var(--neutral))",
+        nav: {
+          DEFAULT: "hsl(var(--nav))",
+          foreground: "hsl(var(--nav-foreground))",
+          border: "hsl(var(--nav-border))",
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

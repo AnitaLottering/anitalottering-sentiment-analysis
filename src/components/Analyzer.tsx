@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, Upload, Sparkles, Download, RotateCcw } from "lucide-react";
+import { Loader2, Upload, Sparkles, Download, RotateCcw, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { analyzeSentiment, explainSentiment, type SentimentScore } from "@/lib/sentiment";
 import { addHistory, type HistoryEntry } from "@/lib/storage";
@@ -144,6 +144,16 @@ export const Analyzer = ({ history, onHistoryChange }: Props) => {
                 ) : (
                   <><Sparkles className="w-4 h-4 mr-2" /> Analyze sentiment</>
                 )}
+              </Button>
+              <Button
+                onClick={handleAnalyze}
+                disabled={loading || !text.trim()}
+                size="lg"
+                variant="outline"
+                className="h-12 border-2 hover:bg-secondary hover:scale-[1.02] transition-smooth"
+                title="Re-run analysis for real-time updates"
+              >
+                <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} /> Refresh
               </Button>
               <Button
                 onClick={handleReset}

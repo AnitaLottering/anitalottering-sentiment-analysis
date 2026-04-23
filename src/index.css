@@ -41,6 +41,10 @@
     --input: 270 13% 90%;
     --ring: 270 85% 60%;
 
+    --nav: 265 60% 18%;
+    --nav-foreground: 0 0% 100%;
+    --nav-border: 270 40% 30%;
+
     --radius: 1rem;
 
     --gradient-hero: linear-gradient(135deg, hsl(270 85% 55%) 0%, hsl(270 90% 70%) 100%);
@@ -84,6 +88,9 @@
     --border: 260 20% 22%;
     --input: 260 20% 22%;
     --ring: 285 90% 70%;
+    --nav: 265 50% 12%;
+    --nav-foreground: 0 0% 100%;
+    --nav-border: 270 30% 25%;
     --gradient-hero: linear-gradient(135deg, hsl(270 85% 55%) 0%, hsl(285 90% 70%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(270 85% 55%) 0%, hsl(285 90% 70%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(270 80% 50%) 0%, hsl(285 90% 70%) 100%);

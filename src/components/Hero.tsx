@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BarChart3, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 export const Hero = () => {
   return (
@@ -26,9 +26,6 @@ export const Hero = () => {
             <a href="#analyze">
               Start analyzing <ArrowRight className="ml-2 w-4 h-4" />
             </a>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="h-12 px-8">
-            <a href="#features"><BarChart3 className="mr-2 w-4 h-4" /> See features</a>
           </Button>
         </div>
       </div>
