@@ -17,7 +17,7 @@ const generateReply = (q: string, history: HistoryEntry[]): string => {
   const last = history[0];
 
   if (/how|work|use|tool|what is/.test(lower)) {
-    return "I help you analyze the sentiment of social media text using AI. Just paste your text in the Analyze section, pick a platform, and click Analyze. You'll see positive/negative/neutral confidence scores and trend charts. Need an API key? Get one free at huggingface.co/settings/tokens.";
+    return "I help you analyze the sentiment of social media text. Just paste your text in the Analyze section, pick a platform, and click Analyze. You'll see positive/negative/neutral confidence scores and trend charts — no API key needed!";
   }
   if (/improve|better|tone|suggest|tip/.test(lower)) {
     if (last?.result.label === "negative") {
@@ -34,7 +34,7 @@ const generateReply = (q: string, history: HistoryEntry[]): string => {
     return `Your latest analysis on ${last.platform} came back as **${last.result.label}** with ${pct(last.result.score)} confidence. Breakdown: positive ${pct(last.result.positive)}, neutral ${pct(last.result.neutral)}, negative ${pct(last.result.negative)}. ${last.result.label === "positive" ? "Nice — your audience will likely respond well!" : last.result.label === "negative" ? "Consider rewording for a warmer tone." : "Adding emotion or a question could boost engagement."}`;
   }
   if (/api|key|hugging/.test(lower)) {
-    return "You need a free Hugging Face API key. Visit huggingface.co/settings/tokens, create a 'Read' token, and paste it into the API key field in the Analyze section. It's stored only in your browser.";
+    return "Good news — no API key is required! This app uses a built-in sentiment engine that runs entirely in your browser. Just type your text and hit Analyze.";
   }
   if (/hi|hello|hey/.test(lower)) {
     return "Hey there! 👋 I'm your sentiment assistant. Ask me about your results, tone tips, or how the tool works.";

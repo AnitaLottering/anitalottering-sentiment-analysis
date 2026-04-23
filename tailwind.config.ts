@@ -58,6 +58,8 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         "primary-glow": "hsl(var(--primary-glow))",
+        tertiary: "hsl(var(--tertiary))",
+        quaternary: "hsl(var(--quaternary))",
         positive: "hsl(var(--positive))",
         negative: "hsl(var(--negative))",
         neutral: "hsl(var(--neutral))",

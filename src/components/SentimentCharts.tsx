@@ -56,12 +56,42 @@ export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
 
   return (
     <div className="grid lg:grid-cols-3 gap-6">
-      <div className="p-6 rounded-2xl bg-card border border-border shadow-soft">
+      <div className="p-6 rounded-2xl bg-card border border-border shadow-soft hover-lift">
         <h3 className="font-semibold mb-4">Distribution</h3>
         <ResponsiveContainer width="100%" height={220}>
           <PieChart>
-            <Pie data={pieData} dataKey="value" innerRadius={50} outerRadius={85} paddingAngle={4}>
-              {pieData.map((d) => <Cell key={d.name} fill={d.color} />)}
+            <defs>
+              <linearGradient id="grad-positive" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor={COLORS.positive} stopOpacity={1} />
+                <stop offset="100%" stopColor="hsl(var(--quaternary))" stopOpacity={0.9} />
+              </linearGradient>
+              <linearGradient id="grad-negative" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor={COLORS.negative} stopOpacity={1} />
+                <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity={0.9} />
+              </linearGradient>
+              <linearGradient id="grad-neutral" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor={COLORS.neutral} stopOpacity={1} />
+                <stop offset="100%" stopColor="hsl(var(--tertiary))" stopOpacity={0.9} />
+              </linearGradient>
+            </defs>
+            <Pie
+              data={pieData}
+              dataKey="value"
+              innerRadius={50}
+              outerRadius={85}
+              paddingAngle={4}
+              isAnimationActive
+              animationDuration={900}
+              animationEasing="ease-out"
+            >
+              {pieData.map((d) => (
+                <Cell
+                  key={d.name}
+                  fill={`url(#grad-${d.name.toLowerCase()})`}
+                  stroke="hsl(var(--card))"
+                  strokeWidth={2}
+                />
+              ))}
             </Pie>
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={{ fontSize: "0.8rem" }} />
@@ -69,20 +99,45 @@ export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
         </ResponsiveContainer>
       </div>
 
-      <div className="p-6 rounded-2xl bg-card border border-border shadow-soft">
+      <div className="p-6 rounded-2xl bg-card border border-border shadow-soft hover-lift">
         <h3 className="font-semibold mb-4">Average confidence (%)</h3>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={barData}>
+            <defs>
+              <linearGradient id="bar-positive" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={COLORS.positive} />
+                <stop offset="100%" stopColor="hsl(var(--quaternary))" />
+              </linearGradient>
+              <linearGradient id="bar-negative" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={COLORS.negative} />
+                <stop offset="100%" stopColor="hsl(var(--accent))" />
+              </linearGradient>
+              <linearGradient id="bar-neutral" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={COLORS.neutral} />
+                <stop offset="100%" stopColor="hsl(var(--tertiary))" />
+              </linearGradient>
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis dataKey="name" tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
             <YAxis tick={{ fontSize: 12, fill: "hsl(var(--muted-foreground))" }} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="value" radius={[8, 8, 0, 0]} />
+            <Tooltip contentStyle={tooltipStyle} cursor={{ fill: "hsl(var(--muted) / 0.4)" }} />
+            <Legend wrapperStyle={{ fontSize: "0.8rem" }} />
+            <Bar
+              dataKey="value"
+              name="Confidence"
+              radius={[8, 8, 0, 0]}
+              isAnimationActive
+              animationDuration={900}
+            >
+              {barData.map((d) => (
+                <Cell key={d.name} fill={`url(#bar-${d.name.toLowerCase()})`} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="p-6 rounded-2xl bg-card border border-border shadow-soft">
+      <div className="p-6 rounded-2xl bg-card border border-border shadow-soft hover-lift">
         <h3 className="font-semibold mb-4">Trend (last {trendData.length})</h3>
         <ResponsiveContainer width="100%" height={220}>
           <LineChart data={trendData}>
@@ -90,9 +145,10 @@ export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
             <XAxis dataKey="name" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <Tooltip contentStyle={tooltipStyle} />
-            <Line type="monotone" dataKey="positive" stroke={COLORS.positive} strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="negative" stroke={COLORS.negative} strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="neutral" stroke={COLORS.neutral} strokeWidth={2} dot={false} />
+            <Legend wrapperStyle={{ fontSize: "0.8rem" }} />
+            <Line type="monotone" dataKey="positive" stroke={COLORS.positive} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
+            <Line type="monotone" dataKey="negative" stroke={COLORS.negative} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
+            <Line type="monotone" dataKey="neutral" stroke={COLORS.neutral} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
           </LineChart>
         </ResponsiveContainer>
       </div>
