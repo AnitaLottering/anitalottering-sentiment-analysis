@@ -13,10 +13,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 260 25% 12%;
 
-    /* Vibrant multi-color palette */
-    --primary: 270 85% 60%;          /* purple */
+    /* Single-color (purple) palette */
+    --primary: 270 85% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 285 90% 70%;
+    --primary-glow: 270 90% 72%;
 
     --secondary: 270 20% 95%;
     --secondary-foreground: 260 25% 12%;
@@ -24,15 +24,15 @@
     --muted: 270 14% 95%;
     --muted-foreground: 260 9% 46%;
 
-    --accent: 330 85% 60%;            /* pink */
+    --accent: 270 85% 60%;
     --accent-foreground: 0 0% 100%;
 
-    --tertiary: 25 95% 58%;           /* orange */
-    --quaternary: 175 75% 45%;        /* teal */
+    --tertiary: 270 70% 50%;
+    --quaternary: 270 60% 40%;
 
-    --positive: 160 75% 42%;          /* teal-green */
-    --negative: 350 85% 60%;          /* red-pink */
-    --neutral: 38 95% 55%;            /* warm orange/yellow */
+    --positive: 270 70% 50%;
+    --negative: 270 85% 65%;
+    --neutral: 270 30% 70%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -43,11 +43,11 @@
 
     --radius: 1rem;
 
-    --gradient-hero: linear-gradient(135deg, hsl(270 85% 60%) 0%, hsl(330 85% 60%) 50%, hsl(25 95% 58%) 100%);
-    --gradient-primary: linear-gradient(135deg, hsl(270 85% 60%) 0%, hsl(285 90% 70%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(330 85% 60%) 0%, hsl(25 95% 58%) 100%);
-    --gradient-cool: linear-gradient(135deg, hsl(175 75% 45%) 0%, hsl(270 85% 60%) 100%);
-    --gradient-soft: linear-gradient(180deg, hsl(270 30% 98%) 0%, hsl(285 30% 96%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(270 85% 55%) 0%, hsl(270 90% 70%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(270 85% 55%) 0%, hsl(270 90% 70%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(270 80% 50%) 0%, hsl(270 85% 65%) 100%);
+    --gradient-cool: linear-gradient(135deg, hsl(270 60% 45%) 0%, hsl(270 85% 65%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(270 30% 98%) 0%, hsl(270 30% 96%) 100%);
     --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(270 30% 99%) 100%);
 
     --shadow-sm: 0 2px 8px -2px hsl(270 30% 50% / 0.10);
@@ -72,22 +72,22 @@
     --secondary-foreground: 270 40% 98%;
     --muted: 260 20% 16%;
     --muted-foreground: 270 20% 70%;
-    --accent: 330 85% 65%;
+    --accent: 285 90% 70%;
     --accent-foreground: 260 30% 8%;
-    --tertiary: 25 95% 62%;
-    --quaternary: 175 75% 50%;
-    --positive: 160 75% 50%;
-    --negative: 350 85% 65%;
-    --neutral: 38 95% 60%;
+    --tertiary: 270 70% 55%;
+    --quaternary: 270 60% 45%;
+    --positive: 270 70% 60%;
+    --negative: 285 90% 75%;
+    --neutral: 270 30% 65%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 270 40% 98%;
     --border: 260 20% 22%;
     --input: 260 20% 22%;
     --ring: 285 90% 70%;
-    --gradient-hero: linear-gradient(135deg, hsl(285 90% 65%) 0%, hsl(330 85% 65%) 50%, hsl(25 95% 62%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(270 85% 55%) 0%, hsl(285 90% 70%) 100%);
     --gradient-primary: linear-gradient(135deg, hsl(270 85% 55%) 0%, hsl(285 90% 70%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(330 85% 65%) 0%, hsl(25 95% 62%) 100%);
-    --gradient-cool: linear-gradient(135deg, hsl(175 75% 50%) 0%, hsl(270 85% 60%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(270 80% 50%) 0%, hsl(285 90% 70%) 100%);
+    --gradient-cool: linear-gradient(135deg, hsl(270 60% 45%) 0%, hsl(285 90% 70%) 100%);
     --gradient-soft: linear-gradient(180deg, hsl(260 30% 8%) 0%, hsl(260 30% 10%) 100%);
     --gradient-card: linear-gradient(135deg, hsl(260 25% 11%) 0%, hsl(260 25% 13%) 100%);
   }
