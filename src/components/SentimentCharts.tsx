@@ -29,15 +29,15 @@ export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
   );
 
   const pieData = [
-    { name: "Positive", value: counts.positive, color: COLORS.positive },
-    { name: "Negative", value: counts.negative, color: COLORS.negative },
-    { name: "Neutral", value: counts.neutral, color: COLORS.neutral },
+    { name: "😄 Positive", key: "positive", value: counts.positive, color: COLORS.positive },
+    { name: "😠 Negative", key: "negative", value: counts.negative, color: COLORS.negative },
+    { name: "😐 Neutral", key: "neutral", value: counts.neutral, color: COLORS.neutral },
   ].filter(d => d.value > 0);
 
   const barData = [
-    { name: "Positive", value: +(totals.positive / history.length * 100).toFixed(1), fill: COLORS.positive },
-    { name: "Negative", value: +(totals.negative / history.length * 100).toFixed(1), fill: COLORS.negative },
-    { name: "Neutral", value: +(totals.neutral / history.length * 100).toFixed(1), fill: COLORS.neutral },
+    { name: "😄 Positive", key: "positive", value: +(totals.positive / history.length * 100).toFixed(1), fill: COLORS.positive },
+    { name: "😠 Negative", key: "negative", value: +(totals.negative / history.length * 100).toFixed(1), fill: COLORS.negative },
+    { name: "😐 Neutral", key: "neutral", value: +(totals.neutral / history.length * 100).toFixed(1), fill: COLORS.neutral },
   ];
 
   const trendData = [...history].reverse().slice(-20).map((h, i) => ({
@@ -86,8 +86,8 @@ export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
             >
               {pieData.map((d) => (
                 <Cell
-                  key={d.name}
-                  fill={`url(#grad-${d.name.toLowerCase()})`}
+                  key={d.key}
+                  fill={d.color}
                   stroke="hsl(var(--card))"
                   strokeWidth={2}
                 />
@@ -130,7 +130,7 @@ export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
               animationDuration={900}
             >
               {barData.map((d) => (
-                <Cell key={d.name} fill={`url(#bar-${d.name.toLowerCase()})`} />
+                <Cell key={d.key} fill={d.fill} />
               ))}
             </Bar>
           </BarChart>
@@ -146,9 +146,9 @@ export const SentimentCharts = ({ history }: { history: HistoryEntry[] }) => {
             <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} />
             <Tooltip contentStyle={tooltipStyle} />
             <Legend wrapperStyle={{ fontSize: "0.8rem" }} />
-            <Line type="monotone" dataKey="positive" stroke={COLORS.positive} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
-            <Line type="monotone" dataKey="negative" stroke={COLORS.negative} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
-            <Line type="monotone" dataKey="neutral" stroke={COLORS.neutral} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
+            <Line type="monotone" dataKey="positive" name="😄 Positive" stroke={COLORS.positive} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
+            <Line type="monotone" dataKey="negative" name="😠 Negative" stroke={COLORS.negative} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
+            <Line type="monotone" dataKey="neutral" name="😐 Neutral" stroke={COLORS.neutral} strokeWidth={2.5} dot={{ r: 3 }} animationDuration={900} />
           </LineChart>
         </ResponsiveContainer>
       </div>
