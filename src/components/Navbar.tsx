@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Sparkles, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const links = [
@@ -31,11 +31,8 @@ export const Navbar = () => {
       }`}
     >
       <nav className="container flex items-center justify-between h-16">
-        <a href="#top" className="flex items-center gap-2 font-bold text-lg">
-          <div className="w-9 h-9 rounded-xl bg-gradient-hero flex items-center justify-center shadow-glow">
-            <Sparkles className="w-5 h-5 text-primary-foreground" />
-          </div>
-          <span className="text-gradient">SentiPulse</span>
+        <a href="#top" className="font-bold text-lg">
+          <span className="text-gradient">Social Media Analysis</span>
         </a>
         <div className="hidden md:flex items-center gap-1">
           {links.map(l => (

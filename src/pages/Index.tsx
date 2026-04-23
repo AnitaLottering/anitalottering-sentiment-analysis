@@ -13,7 +13,7 @@ const Index = () => {
 
   useEffect(() => {
     setHistory(getHistory());
-    document.title = "SentiPulse — AI Social Media Sentiment Analysis";
+    document.title = "Social Media Analysis — AI Sentiment Insights";
     const meta = document.querySelector('meta[name="description"]');
     const desc = "Analyze sentiment of social media posts from Twitter, Instagram, Facebook, LinkedIn and TikTok with AI-powered insights and beautiful charts.";
     if (meta) meta.setAttribute("content", desc);
