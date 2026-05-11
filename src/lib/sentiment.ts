@@ -75,12 +75,12 @@ export async function analyzeSentiment(text: string): Promise<SentimentScore> {
   let neutral: number;
 
   if (total === 0) {
-    positive = 0.15;
-    negative = 0.15;
-    neutral = 0.7;
+    positive = 0.1;
+    negative = 0.1;
+    neutral = 0.8;
   } else {
-    // Map raw counts to soft probabilities with a neutral baseline
-    const strength = Math.min(1, total / Math.max(4, tokens.length / 3));
+    // Strong sentiment signal — even a single cue tilts the result decisively
+    const strength = Math.min(1, 0.55 + total * 0.18);
     const rawPos = pos / total;
     const rawNeg = neg / total;
     positive = +(rawPos * strength).toFixed(4);
