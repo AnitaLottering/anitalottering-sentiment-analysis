@@ -44,9 +44,6 @@ const Index = () => {
         <Rating />
       </main>
       <footer className="py-10 border-t border-border text-center text-sm text-muted-foreground">
-        <div className="container">
-          Built with ❤️ · Powered by Hugging Face · Your data stays in your browser
-        </div>
       </footer>
       <Chatbot history={history} />
     </div>
