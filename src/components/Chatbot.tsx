@@ -26,7 +26,7 @@ const generateReply = (q: string, history: HistoryEntry[]): string => {
     if (last?.result.label === "neutral") {
       return "Your last post was neutral. To increase engagement: (1) add a personal anecdote or emotion word, (2) ask a question to invite replies, (3) use vivid verbs instead of 'is/was', (4) include a clear CTA.";
     }
-    return "Great content tips: lead with emotion, keep sentences under 20 words, use specific numbers, and end with a question or CTA. Posts with positive sentiment typically get 2x more shares.";
+    return "Great content tips: lead with emotion, keep sentences under 20 words, use specific numbers and end with a question or CTA. Posts with positive sentiment typically get 2x more shares.";
   }
   if (/result|mean|score|sentiment|last|latest/.test(lower)) {
     if (!last) return "You haven't analyzed any text yet. Head to the Analyze section and paste some content first!";
